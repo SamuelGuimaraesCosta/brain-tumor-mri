@@ -72,7 +72,7 @@ val_images_dir = os.path.join(folder_path, 'valid/images')
 val_labels_dir = os.path.join(folder_path, 'valid/labels')
 
 # Função para carregar e preprocessar os dados com arquivos .txt para máscaras
-import cv2  # Certifique-se de importar o OpenCV
+import cv2
 
 def load_data_with_txt(image_dir, label_dir, img_height, img_width):
     images, labels = [], []
@@ -129,9 +129,6 @@ def preprocess_dataset(images, labels):
             plt.title("Máscara")
             plt.axis('off')
 
-            # Debug: imprimir valores únicos da imagem
-            print(f"Valores únicos da imagem: {np.unique(img[i].numpy())}")
-
         plt.tight_layout()
         plt.show()
 
@@ -140,7 +137,6 @@ def preprocess_dataset(images, labels):
 train_dataset = preprocess_dataset(train_images, train_labels)
 val_dataset = preprocess_dataset(val_images, val_labels)
 
-# Substituir a dependência do pix2pix
 def upsample(filters, size):
     """Camada de transposição de convolução para upsampling."""
     return tf.keras.Sequential([
@@ -149,11 +145,9 @@ def upsample(filters, size):
         layers.ReLU()
     ])
 
-# Construir o modelo usando DeepLabV3+
 base_model = tf.keras.applications.MobileNetV2(input_shape=[IMG_HEIGHT, IMG_WIDTH, 3], include_top=False)
 base_model.trainable = False
 
-# Camadas específicas para a segmentação
 layer_names = [
     'block_1_expand_relu',   # Baixa resolução
     'block_3_expand_relu',   # Média resolução
@@ -264,7 +258,7 @@ plot_training_history(history)
 
 
 # Variável para definir quantos resultados serão exibidos
-num_results = 10  # Você pode escolher o número desejado, como 5, 10, etc.
+num_results = 10
 
 # Função para exibir múltiplos exemplos de imagens de entrada, máscaras verdadeiras e máscaras preditas
 def display_multiple_results(dataset, model, num_results=5):
@@ -291,8 +285,7 @@ display_multiple_results(val_dataset, define_model, num_results=num_results)
 
 import tensorflow as tf
 
-# Assumindo que você já treinou o modelo e o atribuiu à variável 'define_model'
-model = define_model  # Substitua pelo nome real do seu modelo treinado
+model = define_model 
 
 # Salvar o modelo no formato Keras nativo
 model_save_path = '/content/drive/MyDrive/PAI/meu_modelo_treinado.keras'
